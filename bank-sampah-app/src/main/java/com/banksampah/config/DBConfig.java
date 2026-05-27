@@ -14,19 +14,18 @@ public class DBConfig {
 
         try {
             Connection conn = DriverManager.getConnection(
-                URL,
-                USER,
-                PASSWORD
-            );
+                    URL,
+                    USER,
+                    PASSWORD);
             System.out.println("Database berhasil terhubung bang:)");
 
             return conn;
-        
+
         } catch (Exception e) {
             System.out.println("gagal tehubung ngabss:(");
             e.printStackTrace();
 
-            return null
+            return null;
         }
 
     }
