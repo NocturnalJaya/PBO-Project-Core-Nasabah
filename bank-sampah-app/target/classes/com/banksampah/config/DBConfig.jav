@@ -1,4 +1,4 @@
-package com.banksampah.2config;
+package com.banksampah.config;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
