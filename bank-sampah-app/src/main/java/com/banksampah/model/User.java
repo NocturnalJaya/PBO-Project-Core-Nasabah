@@ -44,4 +44,23 @@ public class User {
         return active;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setUidRfid(String uidRfid) {
+        this.uidRfid = uidRfid;
+    }
+
+    public void setNik(String nik) {
+        this.nik = nik;
+    }
+
+    public void setBiodataId(int biodataId) {
+        this.biodataId = biodataId;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 }

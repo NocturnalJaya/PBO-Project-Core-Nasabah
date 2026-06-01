@@ -1,4 +1,7 @@
+com\banksampah\model\User.class
 com\banksampah\config\DBConfig.class
+com\banksampah\repository\IUserRepository.class
+com\banksampah\repository\UserRepository.class
 com\banksampah\gui\panel\SearchPanel.class
 com\banksampah\cache\UserCache.class
 com\banksampah\app\Main.class
