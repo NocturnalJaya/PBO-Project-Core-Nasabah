@@ -38,11 +38,68 @@ public class UserRepository implements IUserRepository {
 
     @Override
     public User findByNik(String nik) {
+
+        String sql = "SELECT * FROM tb_nasabah WHERE nik = ?";
+
+        try {
+
+            Connection conn = DBConfig.connect();
+
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ps.setString(1, nik);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+
+                User user = new User();
+
+                user.setId(rs.getInt("id"));
+                user.setUidRfid(rs.getString("uid_rfid"));
+                user.setNik(rs.getString("nik"));
+                user.setBiodataId(rs.getInt("biodata_id"));
+                user.setActive(rs.getBoolean("status_aktif"));
+
+                return user;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         return null;
     }
 
     @Override
     public User findByUid(String uid) {
+
+        String sql = "SELECT * FROM tb_nasabah WHERE uid_rfid = ?";
+
+        try {
+            Connection conn = DBConfig.connect();
+
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, uid);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                User user = new User();
+
+                user.setId(rs.getInt("id"));
+                user.setUidRfid(rs.getString("uid_rfid"));
+                user.setNik(rs.getString("nik"));
+                user.setBiodataId(rs.getInt("biodata_id"));
+                user.setActive(rs.getBoolean("status_aktif"));
+
+                return user;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         return null;
     }
 }
