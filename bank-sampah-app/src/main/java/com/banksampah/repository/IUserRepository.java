@@ -3,7 +3,7 @@ package com.banksampah.repository;
 import com.banksampah.model.User;
 
 public interface IUserRepository {
-    void save(User user);
+    int save(User user);
 
     User findByNik(String nik);
 

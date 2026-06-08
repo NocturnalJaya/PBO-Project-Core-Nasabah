@@ -1,28 +1,54 @@
 package com.banksampah.app;
 
+import java.time.LocalDate;
+
 import com.banksampah.config.DBConfig;
+import com.banksampah.model.Biodata;
 import com.banksampah.model.User;
+import com.banksampah.repository.BiodataRepository;
 import com.banksampah.repository.UserRepository;
 import com.banksampah.exception.DuplicateNIKException;
+import com.banksampah.exception.UserNotFoundException;
+import com.banksampah.service.BiodataService;
+import com.banksampah.service.KYCService;
 import com.banksampah.service.UserService;
+
+import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) {
 
-        UserService service = new UserService();
+        BiodataService biodataService = new BiodataService();
+        UserService userService = new UserService();
+        KYCService kycService = new KYCService();
 
-        System.out.println("Pencarian pertama:");
-        User user1 = service.findByNik("6713617236238");
+        Biodata biodata = new Biodata();
+        biodata.setNamaLengkap("Rahmat Hadi Wijaya");
+        biodata.setTanggalLahir(LocalDate.of(2005, 1, 1));
+        biodata.setAlamat("Malang");
+        biodata.setNoHp("081234567890");
+        biodata.setJenisKelamin("L");
 
-        if (user1 != null) {
-            System.out.println("User ditemukan: " + user1.getNik());
-        }
+        int biodataId = biodataService.saveBiodata(biodata);
 
-        System.out.println("\nPencarian kedua:");
-        User user2 = service.findByNik("6713617236238");
+        User user = new User();
+        user.setUidRfid("TEST_UID_KYC_001");
+        user.setNik("3377009988776655");
+        user.setBiodataId(biodataId);
+        user.setActive(true);
 
-        if (user2 != null) {
-            System.out.println("User ditemukan: " + user2.getNik());
+        try {
+            int nasabahId = userService.registerUser(user);
+
+            kycService.createPendingStatus(nasabahId);
+
+            System.out.println("Registrasi lengkap berhasil!");
+            System.out.println("Biodata ID: " + biodataId);
+            System.out.println("Nasabah ID: " + nasabahId);
+            System.out.println("Status KYC: pending");
+
+        } catch (DuplicateNIKException e) {
+            System.out.println("Registrasi gagal: " + e.getMessage());
         }
     }
 }

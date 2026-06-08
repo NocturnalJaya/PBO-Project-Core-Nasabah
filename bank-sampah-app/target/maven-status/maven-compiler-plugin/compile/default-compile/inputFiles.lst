@@ -3,8 +3,10 @@ D:\Full codingan D\PBO Project Core Nasabah\bank-sampah-app\src\main\java\com\ba
 D:\Full codingan D\PBO Project Core Nasabah\bank-sampah-app\src\main\java\com\banksampah\model\User.java
 D:\Full codingan D\PBO Project Core Nasabah\bank-sampah-app\src\main\java\com\banksampah\dto\UserResponse.java
 D:\Full codingan D\PBO Project Core Nasabah\bank-sampah-app\src\main\java\com\banksampah\repository\IUserRepository.java
+D:\Full codingan D\PBO Project Core Nasabah\bank-sampah-app\src\main\java\com\banksampah\repository\IKYCRepository.java
 D:\Full codingan D\PBO Project Core Nasabah\bank-sampah-app\src\main\java\com\banksampah\App.java
 D:\Full codingan D\PBO Project Core Nasabah\bank-sampah-app\src\main\java\com\banksampah\config\DBConfig.java
+D:\Full codingan D\PBO Project Core Nasabah\bank-sampah-app\src\main\java\com\banksampah\repository\BiodataRepository.java
 D:\Full codingan D\PBO Project Core Nasabah\bank-sampah-app\src\main\java\com\banksampah\util\DateUtil.java
 D:\Full codingan D\PBO Project Core Nasabah\bank-sampah-app\src\main\java\com\banksampah\exception\RFIDException.java
 D:\Full codingan D\PBO Project Core Nasabah\bank-sampah-app\src\main\java\com\banksampah\service\KYCService.java
@@ -18,7 +20,10 @@ D:\Full codingan D\PBO Project Core Nasabah\bank-sampah-app\src\main\java\com\ba
 D:\Full codingan D\PBO Project Core Nasabah\bank-sampah-app\src\main\java\com\banksampah\controller\UserController.java
 D:\Full codingan D\PBO Project Core Nasabah\bank-sampah-app\src\main\java\com\banksampah\service\RFIDService.java
 D:\Full codingan D\PBO Project Core Nasabah\bank-sampah-app\src\main\java\com\banksampah\exception\UserNotFoundException.java
+D:\Full codingan D\PBO Project Core Nasabah\bank-sampah-app\src\main\java\com\banksampah\repository\KYCRepository.java
+D:\Full codingan D\PBO Project Core Nasabah\bank-sampah-app\src\main\java\com\banksampah\service\BiodataService.java
 D:\Full codingan D\PBO Project Core Nasabah\bank-sampah-app\src\main\java\com\banksampah\exception\DuplicateNIKException.java
+D:\Full codingan D\PBO Project Core Nasabah\bank-sampah-app\src\main\java\com\banksampah\repository\IBiodataRepository.java
 D:\Full codingan D\PBO Project Core Nasabah\bank-sampah-app\src\main\java\com\banksampah\cache\UserCache.java
 D:\Full codingan D\PBO Project Core Nasabah\bank-sampah-app\src\main\java\com\banksampah\mapper\UserMapper.java
 D:\Full codingan D\PBO Project Core Nasabah\bank-sampah-app\src\main\java\com\banksampah\gui\panel\VerificationPanel.java

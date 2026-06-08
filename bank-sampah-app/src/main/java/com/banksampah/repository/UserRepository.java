@@ -6,11 +6,12 @@ import com.banksampah.model.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class UserRepository implements IUserRepository {
 
     @Override
-    public void save(User user) {
+    public int save(User user) {
 
         String sql = "INSERT INTO tb_nasabah " +
                 "(uid_rfid, nik, biodata_id, status_aktif) " +
@@ -20,7 +21,9 @@ public class UserRepository implements IUserRepository {
 
             Connection conn = DBConfig.connect();
 
-            PreparedStatement ps = conn.prepareStatement(sql);
+            PreparedStatement ps = conn.prepareStatement(
+                    sql,
+                    Statement.RETURN_GENERATED_KEYS);
 
             ps.setString(1, user.getUidRfid());
             ps.setString(2, user.getNik());
@@ -29,11 +32,26 @@ public class UserRepository implements IUserRepository {
 
             ps.executeUpdate();
 
-            System.out.println("User berhasil disimpan!");
+            ResultSet generatedKeys = ps.getGeneratedKeys();
+
+            if (generatedKeys.next()) {
+
+                int idNasabah = generatedKeys.getInt(1);
+
+                System.out.println(
+                        "User berhasil disimpan! ID: "
+                                + idNasabah);
+
+                return idNasabah;
+            }
 
         } catch (Exception e) {
+
             e.printStackTrace();
+
         }
+
+        return -1;
     }
 
     @Override
@@ -42,17 +60,14 @@ public class UserRepository implements IUserRepository {
         String sql = "SELECT * FROM tb_nasabah WHERE nik = ?";
 
         try {
-
             Connection conn = DBConfig.connect();
 
             PreparedStatement ps = conn.prepareStatement(sql);
-
             ps.setString(1, nik);
 
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-
                 User user = new User();
 
                 user.setId(rs.getInt("id"));
