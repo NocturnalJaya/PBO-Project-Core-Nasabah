@@ -2,6 +2,7 @@ package com.banksampah.repository;
 
 import com.banksampah.config.DBConfig;
 import com.banksampah.model.User;
+import com.banksampah.mapper.UserMapper;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

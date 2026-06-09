@@ -71,4 +71,8 @@ public class UserService {
         return user;
     }
 
+    public boolean isNikExists(String nik) {
+        return userRepository.findByNik(nik) != null;
+    }
+
 }
