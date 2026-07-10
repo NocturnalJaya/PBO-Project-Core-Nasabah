@@ -7,6 +7,10 @@ import com.banksampah.model.User;
 import com.banksampah.service.BiodataService;
 import com.banksampah.service.KYCService;
 import com.banksampah.service.UserService;
+import com.banksampah.dto.UserResponse;
+import com.banksampah.exception.UserNotFoundException;
+import com.banksampah.model.StatusKYC;
+import com.banksampah.cache.UserCache;
 
 import java.time.LocalDate;
 
@@ -90,5 +94,84 @@ public class NasabahController {
                 request.getUidRfid().trim().isEmpty()) {
             throw new IllegalArgumentException("UID RFID tidak boleh kosong");
         }
+    }
+
+    public UserResponse findNasabahByUid(String uid) throws UserNotFoundException {
+
+        User user = userService.findByUid(uid);
+        Biodata biodata = biodataService.findById(user.getBiodataId());
+        StatusKYC kyc = kycService.findByNasabahId(user.getId());
+
+        return mapToUserResponse(user, biodata, kyc);
+    }
+
+    public UserResponse findNasabahByNik(String nik) throws UserNotFoundException {
+
+        if (UserCache.contains(nik)) {
+            System.out.println("[CACHE HIT] Data nasabah diambil dari HashMap");
+            return UserCache.get(nik);
+        }
+
+        System.out.println("[DATABASE HIT] Data nasabah diambil dari database");
+
+        User user = userService.findByNik(nik);
+        Biodata biodata = biodataService.findById(user.getBiodataId());
+        StatusKYC kyc = kycService.findByNasabahId(user.getId());
+
+        UserResponse response = mapToUserResponse(user, biodata, kyc);
+
+        UserCache.put(nik, response);
+
+        return response;
+    }
+
+    private UserResponse mapToUserResponse(User user, Biodata biodata, StatusKYC kyc) {
+
+        UserResponse response = new UserResponse();
+
+        response.setNasabahId(user.getId());
+        response.setUidRfid(user.getUidRfid());
+        response.setNik(user.getNik());
+        response.setActive(user.isActive());
+
+        response.setNamaLengkap(biodata.getNamaLengkap());
+        response.setTanggalLahir(biodata.getTanggalLahir().toString());
+        response.setAlamat(biodata.getAlamat());
+        response.setNoHp(biodata.getNoHp());
+        response.setJenisKelamin(biodata.getJenisKelamin());
+
+        if (kyc != null) {
+            response.setStatusKyc(kyc.getStatusKyc());
+
+            if (kyc.getVerifiedAt() != null) {
+                response.setVerifiedAt(kyc.getVerifiedAt().toString());
+            } else {
+                response.setVerifiedAt("-");
+            }
+
+            if (kyc.getVerifiedBy() != null) {
+                response.setVerifiedBy(kyc.getVerifiedBy());
+            } else {
+                response.setVerifiedBy("-");
+            }
+        } else {
+            response.setStatusKyc("belum tersedia");
+            response.setVerifiedAt("-");
+            response.setVerifiedBy("-");
+        }
+
+        return response;
+    }
+
+    public StatusKYC findKycStatus(int nasabahId) {
+        return kycService.findByNasabahId(nasabahId);
+    }
+
+    public void verifyKyc(int nasabahId, String verifiedBy) {
+        kycService.verifyKYC(nasabahId, verifiedBy);
+    }
+
+    public void rejectKyc(int nasabahId, String verifiedBy) {
+        kycService.rejectKYC(nasabahId, verifiedBy);
     }
 }

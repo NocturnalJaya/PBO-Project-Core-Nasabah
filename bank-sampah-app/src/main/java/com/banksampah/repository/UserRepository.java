@@ -19,7 +19,6 @@ public class UserRepository implements IUserRepository {
                 "VALUES (?, ?, ?, ?)";
 
         try {
-
             Connection conn = DBConfig.connect();
 
             PreparedStatement ps = conn.prepareStatement(
@@ -36,20 +35,15 @@ public class UserRepository implements IUserRepository {
             ResultSet generatedKeys = ps.getGeneratedKeys();
 
             if (generatedKeys.next()) {
-
                 int idNasabah = generatedKeys.getInt(1);
 
-                System.out.println(
-                        "User berhasil disimpan! ID: "
-                                + idNasabah);
+                System.out.println("User berhasil disimpan! ID: " + idNasabah);
 
                 return idNasabah;
             }
 
         } catch (Exception e) {
-
             e.printStackTrace();
-
         }
 
         return -1;
@@ -69,15 +63,7 @@ public class UserRepository implements IUserRepository {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                User user = new User();
-
-                user.setId(rs.getInt("id"));
-                user.setUidRfid(rs.getString("uid_rfid"));
-                user.setNik(rs.getString("nik"));
-                user.setBiodataId(rs.getInt("biodata_id"));
-                user.setActive(rs.getBoolean("status_aktif"));
-
-                return user;
+                return UserMapper.mapToUser(rs);
             }
 
         } catch (Exception e) {
@@ -101,15 +87,7 @@ public class UserRepository implements IUserRepository {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                User user = new User();
-
-                user.setId(rs.getInt("id"));
-                user.setUidRfid(rs.getString("uid_rfid"));
-                user.setNik(rs.getString("nik"));
-                user.setBiodataId(rs.getInt("biodata_id"));
-                user.setActive(rs.getBoolean("status_aktif"));
-
-                return user;
+                return UserMapper.mapToUser(rs);
             }
 
         } catch (Exception e) {

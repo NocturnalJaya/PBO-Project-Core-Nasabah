@@ -1,0 +1,41 @@
+package com.banksampah.gui.component;
+
+import javax.swing.*;
+import java.awt.*;
+
+public class RoundedPanel extends JPanel {
+
+    private final Color bgColor;
+    private final int radius;
+
+    public RoundedPanel(Color bgColor, int radius) {
+        this.bgColor = bgColor;
+        this.radius = radius;
+
+        setOpaque(false);
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+
+        Graphics2D g2 = (Graphics2D) g.create();
+
+        g2.setRenderingHint(
+                RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON);
+
+        g2.setColor(bgColor);
+
+        g2.fillRoundRect(
+                0,
+                0,
+                getWidth(),
+                getHeight(),
+                radius, 
+                radius);
+
+        g2.dispose();
+
+        super.paintComponent(g);
+    }
+}
